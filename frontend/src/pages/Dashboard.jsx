@@ -10,9 +10,15 @@ import {
     Bell,
     Menu,
     X,
-    Sparkles
+    Sparkles,
+    UserCog,
+    Truck,
+    FileText,
+    Settings,
+    HelpCircle
 } from 'lucide-react';
 import RightSidebar from '../components/RightSidebar';
+import NotificationPanel from '../components/NotificationPanel';
 import {
     PieChart,
     Pie,
@@ -31,6 +37,7 @@ const Dashboard = () => {
     const [activeTab, setActiveTab] = useState('dashboard');
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [isAiSidebarOpen, setIsAiSidebarOpen] = useState(false);
+    const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
     // Mock Data
     const salesData = [
@@ -66,53 +73,84 @@ const Dashboard = () => {
             )}
 
             {/* Sidebar */}
-            <aside className={`fixed lg:static inset-y-0 left-0 z-30 w-72 bg-[#033543] text-white flex flex-col p-6 transition-transform duration-300 ease-in-out shadow-2xl ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
+            <aside className={`fixed lg:static inset-y-0 left-0 z-30 w-72 bg-[#033543] text-white flex flex-col py-6 transition-transform duration-300 ease-in-out shadow-2xl ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
 
                 {/* Logo */}
-                <div className="flex items-center gap-3 mb-12 px-2">
+                <div className="flex items-center gap-3 mb-10 px-6">
                     <div className="relative w-8 h-8 flex-shrink-0">
                         <div className="absolute inset-0 border-[3px] border-white rounded-full"></div>
                         <div className="absolute top-1 right-1 w-2 h-2 bg-white rounded-full"></div>
                     </div>
-                    <h1 className="text-2xl font-bold tracking-tight">AutoKarya</h1>
+                    <span className="text-xl font-bold tracking-tight">AutoKarya</span>
                 </div>
 
                 {/* Navigation */}
-                <nav className="flex-1 flex flex-col gap-2">
-                    <SidebarItem
-                        icon={<LayoutDashboard size={20} />}
-                        label="Dashboard"
-                        active={activeTab === 'dashboard'}
-                        onClick={() => setActiveTab('dashboard')}
-                    />
-                    <SidebarItem
-                        icon={<Package size={20} />}
-                        label="Inventory"
-                        active={activeTab === 'products'}
-                        onClick={() => setActiveTab('products')}
-                    />
-                    <SidebarItem
-                        icon={<Users size={20} />}
-                        label="Customers"
-                        active={activeTab === 'customers'}
-                        onClick={() => setActiveTab('customers')}
-                    />
+                <nav className="flex-1 flex flex-col gap-2 overflow-y-auto">
+                    <div className="space-y-2">
+                        <p className="px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Menu</p>
+                        <SidebarItem
+                            icon={<LayoutDashboard size={20} />}
+                            label="Dashboard"
+                            active={activeTab === 'dashboard'}
+                            onClick={() => setActiveTab('dashboard')}
+                        />
+                        <SidebarItem
+                            icon={<Package size={20} />}
+                            label="Inventory"
+                            active={activeTab === 'products'}
+                            onClick={() => setActiveTab('products')}
+                        />
+                        <SidebarItem
+                            icon={<UserCog size={20} />}
+                            label="Staff"
+                            active={activeTab === 'staff'}
+                            onClick={() => setActiveTab('staff')}
+                        />
+                        <SidebarItem
+                            icon={<Truck size={20} />}
+                            label="Suppliers"
+                            active={activeTab === 'suppliers'}
+                            onClick={() => setActiveTab('suppliers')}
+                        />
+                        <SidebarItem
+                            icon={<FileText size={20} />}
+                            label="AI Logs"
+                            active={activeTab === 'ailogs'}
+                            onClick={() => setActiveTab('ailogs')}
+                        />
+                    </div>
+
+                    <div className="mt-6 space-y-2">
+                        <p className="px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">General</p>
+                        <SidebarItem
+                            icon={<Settings size={20} />}
+                            label="Settings"
+                            active={activeTab === 'settings'}
+                            onClick={() => setActiveTab('settings')}
+                        />
+                        <SidebarItem
+                            icon={<HelpCircle size={20} />}
+                            label="Support"
+                            active={activeTab === 'support'}
+                            onClick={() => setActiveTab('support')}
+                        />
+                    </div>
                 </nav>
 
                 {/* User Profile */}
-                <div className="mt-auto pt-6 border-t border-white/10">
+                <div className="mt-auto pt-6 border-t border-white/10 px-6">
                     <button className="flex items-center gap-3 w-full p-3 rounded-xl hover:bg-white/5 transition-colors group">
-                        <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-sm font-semibold border border-white/10 group-hover:bg-white group-hover:text-[#033543] transition-colors">
+                        <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-sm font-semibold border border-white/10 group-hover:bg-white group-hover:text-[#033543] transition-colors shadow-inner">
                             JD
                         </div>
                         <div className="flex-1 text-left">
-                            <div className="text-sm font-semibold">Jadu</div>
-                            <div className="text-xs text-slate-400">Admin</div>
+                            <div className="text-sm font-semibold group-hover:text-white transition-colors">Jadu</div>
+                            <div className="text-xs text-slate-400 group-hover:text-slate-300">Admin</div>
                         </div>
                         <LogOut size={18} className="text-slate-400 group-hover:text-red-400 transition-colors" />
                     </button>
                     <div className="text-[10px] text-slate-500 text-center mt-4">
-                        &copy; 2024 AutoKarya Inc.
+                        &copy; 2026 AutoKarya Inc.
                     </div>
                 </div>
             </aside>
@@ -145,10 +183,20 @@ const Dashboard = () => {
                             />
                         </div>
 
-                        <button className="p-2.5 relative rounded-xl hover:bg-slate-50 text-slate-500 transition-colors">
-                            <Bell size={20} />
-                            <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
-                        </button>
+                        <div className="relative">
+                            <button
+                                onClick={() => setIsNotificationOpen(!isNotificationOpen)}
+                                className={`p-2.5 relative rounded-xl transition-colors ${isNotificationOpen ? 'bg-slate-100 text-[#033543]' : 'hover:bg-slate-50 text-slate-500'
+                                    }`}
+                            >
+                                <Bell size={20} />
+                                <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
+                            </button>
+                            <NotificationPanel
+                                isOpen={isNotificationOpen}
+                                onClose={() => setIsNotificationOpen(false)}
+                            />
+                        </div>
 
                         <button
                             onClick={() => setIsAiSidebarOpen(true)}
@@ -279,16 +327,24 @@ const Dashboard = () => {
 const SidebarItem = ({ icon, label, active, onClick }) => (
     <button
         onClick={onClick}
-        className={`flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all duration-200 group ${active
-            ? 'bg-white text-[#033543] font-semibold shadow-lg shadow-black/5'
-            : 'text-slate-300 hover:bg-white/10 hover:text-white'
+        className={`relative flex items-center gap-3 px-4 py-3.5 w-full transition-all duration-300 group ${active
+            ? 'bg-gradient-to-r from-white/10 to-transparent border-l-4 border-white'
+            : 'hover:bg-white/5 border-l-4 border-transparent hover:border-white/20'
             }`}
     >
-        <span className={active ? 'text-[#033543]' : 'text-slate-400 group-hover:text-white'}>
-            {icon}
+        <div className={`p-1.5 rounded-lg transition-colors ${active ? 'bg-white text-[#033543]' : 'bg-transparent text-slate-400 group-hover:text-white'
+            }`}>
+            {React.cloneElement(icon, { size: 18 })}
+        </div>
+        <span className={`text-sm font-medium tracking-wide transition-colors ${active ? 'text-white' : 'text-slate-400 group-hover:text-white'
+            }`}>
+            {label}
         </span>
-        <span className="tracking-wide text-[13px]">{label}</span>
-        {active && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-[#033543]"></div>}
+
+        {/* Glow Effect for Active State */}
+        {active && (
+            <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent blur-sm pointer-events-none" />
+        )}
     </button>
 );
 
