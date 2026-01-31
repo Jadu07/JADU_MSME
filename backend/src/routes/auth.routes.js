@@ -7,4 +7,3 @@ router.post("/register", authController.register);
 router.post("/google", authController.googleLogin);
 
 module.exports = router;
-
