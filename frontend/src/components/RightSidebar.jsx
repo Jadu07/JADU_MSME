@@ -68,8 +68,8 @@ const RightSidebar = ({ isOpen, onClose }) => {
                         >
                             {/* Avatar */}
                             <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 shadow-sm ${msg.type === 'user'
-                                    ? 'bg-[#033543] text-white'
-                                    : 'bg-white text-emerald-600 border border-slate-100'
+                                ? 'bg-[#033543] text-white'
+                                : 'bg-white text-emerald-600 border border-slate-100'
                                 }`}>
                                 {msg.type === 'user' ? <User size={18} /> : <Bot size={18} />}
                             </div>
@@ -77,8 +77,8 @@ const RightSidebar = ({ isOpen, onClose }) => {
                             {/* Message Bubble */}
                             <div className={`flex flex-col gap-1 max-w-[80%] ${msg.type === 'user' ? 'items-end' : 'items-start'}`}>
                                 <div className={`p-4 text-sm leading-relaxed shadow-sm ${msg.type === 'user'
-                                        ? 'bg-[#033543] text-white rounded-2xl rounded-tr-none'
-                                        : 'bg-white text-slate-700 border border-slate-100 rounded-2xl rounded-tl-none'
+                                    ? 'bg-[#033543] text-white rounded-2xl rounded-tr-none'
+                                    : 'bg-white text-slate-700 border border-slate-100 rounded-2xl rounded-tl-none'
                                     }`}>
                                     {msg.text}
                                 </div>
