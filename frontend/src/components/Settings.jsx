@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Save, User, Shield, Mail } from 'lucide-react';
+import API_BASE_URL from '../api';
 
 const Settings = () => {
     const [user, setUser] = useState({ name: '', email: '', role: '' });
@@ -24,7 +25,7 @@ const Settings = () => {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:3000/auth/profile', {
+            const response = await fetch(`${API_BASE_URL}/auth/profile`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

@@ -1,6 +1,7 @@
 
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
+import API_BASE_URL from '../api';
 import {
     X, Send, Sparkles, Bot, User, Users, ToggleLeft, ToggleRight, Mic, StopCircle,
     Terminal, ChevronDown, ChevronUp
@@ -49,7 +50,7 @@ const StaffSettingsModal = () => {
         try {
             setLoading(true);
             const token = localStorage.getItem('token');
-            const res = await axios.get('http://localhost:3000/staff', {
+            const res = await axios.get(`${API_BASE_URL}/staff`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setStaffList(res.data);
@@ -63,7 +64,7 @@ const StaffSettingsModal = () => {
     const toggleAvailability = async (id, currentStatus) => {
         try {
             const token = localStorage.getItem('token');
-            await axios.patch(`http://localhost:3000/staff/${id}/availability`,
+            await axios.patch(`${API_BASE_URL}/staff/${id}/availability`,
                 { isAvailable: !currentStatus },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -149,7 +150,7 @@ const RightSidebar = ({ isOpen, onClose }) => {
             setChatHistory(prev => [...prev, { type: 'bot', text: 'Thinking...', isLoading: true }]);
 
             const token = localStorage.getItem('token');
-            const res = await axios.post('http://localhost:3000/agent/chat',
+            const res = await axios.post(`${API_BASE_URL}/agent/chat`,
                 { query: userQuery, history: newHistory },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
