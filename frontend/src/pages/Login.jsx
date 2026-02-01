@@ -61,9 +61,41 @@ const Login = () => {
         }
     }, [navigate]);
 
-    const handleGoogleLogin = () => {
-        window.location.href = `${API_BASE_URL}/auth/google`;
+    const handleDemoLogin = async (role) => {
+        setLoading(true);
+        setError('');
+        
+        // Demo credentials based on backend seedAdmin and a demo staff
+        const credentials = role === 'ADMIN' 
+            ? { email: 'admin@autokarya.com', password: 'admin123' }
+            : { email: 'staff@autokarya.com', password: 'staff123' };
+            
+        try {
+            const response = await fetch(`${API_BASE_URL}/auth/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(credentials)
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('user', JSON.stringify({ name: data.name, role: data.role }));
+                navigate('/dashboard');
+            } else {
+                setError(data.error || 'Demo Login failed. Please ensure backend is seeded.');
+            }
+        } catch (err) {
+            setError('Something went wrong. Please try again.');
+        } finally {
+            setLoading(false);
+        }
     };
+
+    // const handleGoogleLogin = () => {
+    //     window.location.href = `${API_BASE_URL}/auth/google`;
+    // };
 
     return (
         <div className="flex min-h-screen w-full font-sans bg-white">
@@ -149,16 +181,30 @@ const Login = () => {
                             <div className="flex-1 h-px bg-slate-200"></div>
                         </div>
 
-                        {/* Social Login */}
-                        <div className="flex gap-4 justify-center">
+                        {/* Social / Demo Login */}
+                        <div className="flex flex-col gap-3 justify-center">
                             <button
+                                type="button"
+                                onClick={() => handleDemoLogin('ADMIN')}
+                                className="w-full flex items-center justify-center gap-3 py-3 border border-slate-200 rounded-xl text-[#033543] font-bold hover:bg-slate-50 transition-all font-sans"
+                            >
+                                Demo Admin Login
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => handleDemoLogin('STAFF')}
+                                className="w-full flex items-center justify-center gap-3 py-3 border border-slate-200 rounded-xl text-slate-600 font-medium hover:bg-slate-50 transition-all font-sans"
+                            >
+                                Demo Staff Login
+                            </button>
+                            {/* <button
                                 type="button"
                                 onClick={handleGoogleLogin}
                                 className="w-full flex items-center justify-center gap-3 py-3 border border-slate-200 rounded-xl text-slate-600 font-medium hover:bg-slate-50 transition-all font-sans"
                             >
                                 <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="w-5 h-5" alt="Google" />
                                 Continue with Google
-                            </button>
+                            </button> */}
                         </div>
 
                         <p className="text-center mt-6 text-slate-500 text-xs">

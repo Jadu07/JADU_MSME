@@ -123,10 +123,11 @@ class AuthController {
     }
   }
 
-  // Helper to create initial admin if none exists (safe to call on startup)
+  // Helper to create initial admin and demo staff if they don't exist
   async seedAdmin() {
-    const count = await prisma.staff.count();
-    if (count === 0) {
+    // Check and seed admin
+    const adminExists = await prisma.staff.findUnique({ where: { email: "admin@autokarya.com" } });
+    if (!adminExists) {
       const hashedPassword = await bcrypt.hash("admin123", 10);
       await prisma.staff.create({
         data: {
@@ -138,6 +139,22 @@ class AuthController {
         },
       });
       logger.info("Seeded default admin: admin@autokarya.com / admin123");
+    }
+
+    // Check and seed demo staff
+    const staffExists = await prisma.staff.findUnique({ where: { email: "staff@autokarya.com" } });
+    if (!staffExists) {
+      const hashedPassword = await bcrypt.hash("staff123", 10);
+      await prisma.staff.create({
+        data: {
+          name: "Demo Staff",
+          email: "staff@autokarya.com",
+          password: hashedPassword,
+          role: "STAFF",
+          isAvailable: true,
+        },
+      });
+      logger.info("Seeded default staff: staff@autokarya.com / staff123");
     }
   }
 }

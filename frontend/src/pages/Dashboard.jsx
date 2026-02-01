@@ -167,12 +167,14 @@ const Dashboard = () => {
                             active={activeTab === 'sales'}
                             onClick={() => setActiveTab('sales')} // Placeholder logic for now, or route to Sales view
                         />
-                        <SidebarItem
-                            icon={<UserCog size={20} />}
-                            label="Staff"
-                            active={activeTab === 'staff'}
-                            onClick={() => setActiveTab('staff')}
-                        />
+                        {user.role === 'ADMIN' && (
+                            <SidebarItem
+                                icon={<UserCog size={20} />}
+                                label="Staff"
+                                active={activeTab === 'staff'}
+                                onClick={() => setActiveTab('staff')}
+                            />
+                        )}
                         <SidebarItem
                             icon={<Truck size={20} />}
                             label="Suppliers"
@@ -492,7 +494,7 @@ const Dashboard = () => {
 
                         {activeTab === 'products' && <InventoryView />}
 
-                        {activeTab === 'staff' && <StaffView />}
+                        {activeTab === 'staff' && user.role === 'ADMIN' && <StaffView />}
 
                         {activeTab === 'suppliers' && <SuppliersView />}
 

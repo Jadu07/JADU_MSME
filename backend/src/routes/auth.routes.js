@@ -11,10 +11,11 @@ router.get("/google", passport.authenticate("google", { scope: ["profile", "emai
 
 const { authenticateToken } = require("../middlewares/auth.middleware");
 
-router.get("/google/callback",
+router.get("/register",
     passport.authenticate("google", { failureRedirect: "/login" }),
     authController.googleCallback
 );
+
 
 // Protected routes
 router.put("/profile", authenticateToken, authController.updateProfile);
