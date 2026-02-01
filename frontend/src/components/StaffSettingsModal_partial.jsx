@@ -1,4 +1,5 @@
 import axios from 'axios';
+import API_BASE_URL from '../api';
 import { Users, ToggleLeft, ToggleRight } from 'lucide-react';
 
 // Sub-component for Staff Settings
@@ -11,7 +12,7 @@ const StaffSettingsModal = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:3000/staff', {
+      const res = await axios.get(`${API_BASE_URL}/staff`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setStaffList(res.data);
@@ -26,7 +27,7 @@ const StaffSettingsModal = () => {
     try {
       const token = localStorage.getItem('token');
       // CORRECTED: using PATCH based on user feedback
-      await axios.patch(`http://localhost:3000/staff/${id}/availability`,
+      await axios.patch(`${API_BASE_URL}/staff/${id}/availability`,
         { isAvailable: !currentStatus },
         { headers: { Authorization: `Bearer ${token}` } }
       );
