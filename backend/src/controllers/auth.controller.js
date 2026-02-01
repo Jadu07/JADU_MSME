@@ -90,18 +90,18 @@ class AuthController {
         { expiresIn: "24h" }
       );
 
-      const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
+      const frontendUrl = process.env.FRONTEND_URL || "https://jadu-msme.vercel.app";
 
-     const redirectUrl = new URL("/login", frontendUrl);
-     redirectUrl.searchParams.append("token", token);
-     redirectUrl.searchParams.append("name", user.name);
-     redirectUrl.searchParams.append("role", user.role);
-     redirectUrl.searchParams.append("avatar", user.avatar || "");
+      const redirectUrl = new URL("/login", frontendUrl);
+      redirectUrl.searchParams.append("token", token);
+      redirectUrl.searchParams.append("name", user.name);
+      redirectUrl.searchParams.append("role", user.role);
+      redirectUrl.searchParams.append("avatar", user.avatar || "");
 
-     res.redirect(redirectUrl.toString());
+      res.redirect(redirectUrl.toString());
     } catch (err) {
       logger.error("Google Callback Error", err);
-      const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
+      const frontendUrl = process.env.FRONTEND_URL || "https://jadu-msme.vercel.app";
       res.redirect(`${frontendUrl}/login?error=auth_failed`);
     }
   }
