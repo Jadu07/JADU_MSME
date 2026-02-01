@@ -53,4 +53,10 @@ router.post(
   inventoryController.importItems
 );
 
+router.post(
+  "/adjust",
+  requireRole([roles.ADMIN, roles.STAFF]),
+  inventoryController.adjustStock
+);
+
 module.exports = router;
