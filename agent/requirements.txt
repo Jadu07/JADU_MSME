@@ -6,3 +6,7 @@ pandas
 requests
 apscheduler
 python-multipart
+scikit-learn
+numpy
+Prophet
+IsolationForest
