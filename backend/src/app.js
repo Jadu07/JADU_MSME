@@ -25,12 +25,18 @@ app.use(helmet());
 app.use(cors()); // Configure origin in production
 app.use(express.json());
 
-app.use(session({
-  secret: process.env.JWT_SECRET || 'secret_key',
-  resave: false,
-  saveUninitialized: false,
-  cookie: { secure: false } // Set to true if using HTTPS
-}));
+app.use(
+  session({
+    secret: process.env.JWT_SECRET || "secret_key",
+    resave: false,
+    saveUninitialized: false,
+    proxy: true, 
+    cookie: {
+      secure: process.env.NODE_ENV === "production", 
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    },
+  }),
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
